@@ -4,9 +4,9 @@ table, thead, tbody, td, tr, th{
 }
 
 tbody tr td:last-child{
-    background-color: bisque;
+    background-color: red;
 }
 
 tbody tr td:nth-last-child(3){
-    background-color: antiquewhite;
+    background-color: blue;
 }
