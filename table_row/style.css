@@ -4,9 +4,41 @@ table, thead, tbody, td, tr, th{
 }
 
 tbody tr td:last-child{
-    background-color: red;
+    background-color: blueviolet;
 }
 
 tbody tr td:nth-last-child(3){
-    background-color: blue;
+    background-color: pink;
+}
+
+#gyakorlas{
+    background-color: darkcyan;
+}
+
+button:has(+p){
+    background-color: crimson;
+}
+
+button:not(:has(+p)){
+    background-color: darkgoldenrod;
+}
+
+#gyakorlas:has(+a:hover) button{
+    color: darkorchid;
+}
+
+tr:not(:has(td[rowspan]))+tr:not(:has(td[rowspan])):hover td{
+    background-color: fuchsia;
+}
+
+tr:has(td[rowspan]):hover td{
+    background-color: goldenrod;
+}
+
+tr:has(td[rowspan]):has(+tr:hover) td{
+    background-color: lightcoral;
+}
+
+tr:has(td[rowspan])+tr:hover td{
+    background-color: silver;
 }
