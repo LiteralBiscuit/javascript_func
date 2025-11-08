@@ -1,78 +1,84 @@
 /**
  * @type {{author:string, era:string, love1:string, love2:string}[]}
  */
-const arr = [
+const arr =[
     {
-        author: "Balassi Bálint",
-        era: "reformáció",
-        love1: "Losonczy Anna",
-        love2: "Dobó Krisztina"
+        writer: "Balassi Bálint",
+        time: "reformáció",
+        lovers1: "Losonczy Anna",
+        lovers2: "Dobó Krisztina"
     },
     {
-        author: "Csokonai Vitéz Mihály",
-        era: "felvilágosodás",
-        love1: "Vajda Juliána",
+        writer: "Csokonai Vitéz Mihály",
+        time: "felvilágosodás",
+        lovers1: "Vajda Juliána",
     },
     {
-        author: "Petőfi Sándor",
-        era: "magyar romantika",
-        love1: "Mednyánszky Berta",
-        love2: "Szendrey Júlia"
+        writer: "Petőfi Sándor",
+        time: "magyar romantika	",
+        lovers1: "Mednyánszky Berta",
+        lovers2: "Szendrey Júlia"
     },
     {
-        author: "Ady Endre",
-        era: "20. század",
-        love1: "Léda",
-        love2: "Csinszka"
-    }
-];
-
+        writer: "Ady Endre",
+        time: "20. század",
+        lovers1: "Léda",
+        lovers2: "Csinszka"
+    },
+]
+//mat
+ 
 const table = document.createElement("table");
 document.body.appendChild(table);
-
+ 
 const thead = document.createElement("thead");
-const tr = document.createElement("tr");
-const th1 = document.createElement("th");
-const th2 = document.createElement("th");
-const th3 = document.createElement("th");
-
 table.appendChild(thead);
+ 
+const tr = document.createElement("tr");
 thead.appendChild(tr);
-tr.appendChild(th1)
-tr.appendChild(th2)
-tr.appendChild(th3)
+ 
+createCell("th", "Szerző neve", tr); //th1
+ 
+createCell("th", "Korszak", tr); //th2
 
-th1.innerText = "Szerzők";
-th2.innerText = "Korszak";
-th3.innerText = "Szerelmek";
-th3.colSpan = 2;
-
+//tr.lastChild.colSpan=2;
+const th3 = createCell("th", "Szerelmek", tr);
+th3.colSpan=2;
+ 
 const tbody = document.createElement("tbody");
+table.appendChild(tbody);
+ 
+for (const i of arr){
+    const row = document.createElement("tr");
+    tbody.appendChild(row);
+ 
+    createCell("td", i.writer, row); //td1
+ 
+    createCell("td", i.time, row); //td2
 
-table.appendChild(tbody)
+    const td3 = createCell("td", i.lovers1, row);
 
-for(let i = 0; i < arr.length; i++){
-    const tr = document.createElement("tr");
-    const td1 = document.createElement("td");
-    const td2 = document.createElement("td");
-    const td3 = document.createElement("td");
-
-    td1.innerText = arr[i].author;
-    td2.innerText = arr[i].era;
-    td3.innerText = arr[i].love1;
-    
-    tr.appendChild(td1);
-    tr.appendChild(td2);
-    tr.appendChild(td3);
-
-    if(!arr[i].love2){
-        td3.colSpan = 2;
+    if (i.lovers2 === undefined){
+        //row.lastChild.colSpan=2;
+        td3.colSpan=2;
     }
     else{
-        const td4 = document.createElement("td");
-        td4.innerText = arr[i].love2;
-        tr.appendChild(td4);
+        createCell("td", i.lovers2, row);
     }
+}
 
-    tbody.appendChild(tr);
-};		
+/**
+ * makes a cell of given celltype,
+ * writes given cellcontent inside,
+ * and appends it to a given row
+ * @param {string} celltype th vagy td
+ * @param {string} cellcontent cella tartalma
+ * @param {HTMLTableRowElement} parentrow sor amibe rakjuk
+ * @returns {HTMLTableCellElement} visszatér a létrehozott cellával hogy lehessen később módosítani
+ */
+function createCell(celltype, cellcontent, parentrow){
+    const elem = document.createElement(celltype);
+    elem.innerText = cellcontent;
+    parentrow.appendChild(elem);
+    return elem;
+}
