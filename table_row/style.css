@@ -1,0 +1,49 @@
+table, tr, td, th{
+    border: 1px dotted red;
+    border-collapse: collapse;
+}
+
+tbody tr td:last-child{
+    background-color: blue;
+}
+
+tbody tr td:nth-last-child(3){
+    background-color: green;
+}
+
+#gyakorlas{
+    background-color:greenyellow;
+}
+
+button:has(+p){
+    background-color: fuchsia;
+}
+
+button:not(:has(+p)){
+    background-color: navajowhite;
+}
+
+#gyakorlas:has(+a:hover) button{
+    color: goldenrod;
+    font-weight: bold;
+}
+
+tr:not(:has(td[rowspan]))+tr:not(:has(td[rowspan])):hover td{
+    background-color:mediumpurple;
+}
+
+tr:has(td[rowspan]):hover td{
+    background-color: mediumaquamarine
+}
+
+tr:has(td[rowspan]):hover+tr td{
+    background-color: darkorchid
+}
+
+tr:has(td[rowspan]):has(+tr:hover) td{
+    background-color: darkgreen;
+}
+
+tr:has(td[rowspan])+tr:hover td{
+    background-color: lightgreen;
+}
