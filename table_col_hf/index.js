@@ -53,3 +53,31 @@ th3.innerText="Képviselők";
  
 const tbody = document.createElement("tbody");
 table.appendChild(tbody);
+
+
+for (const item of arr){
+    const row = document.createElement("tr");
+    tbody.appendChild(row);
+ 
+    const td1 = document.createElement("td");
+    td1.innerText = item.theme;
+    row.appendChild(td1);
+ 
+    const td2 = document.createElement("td");
+    td2.innerText = item.time;
+    row.appendChild(td2);
+ 
+    const td3 = document.createElement("td");
+    td3.innerText = item.scientist1;
+    row.appendChild(td3);
+ 
+    if (item.scientist2 === undefined){
+        td3.colSpan = 2; 
+    }
+    
+    else{
+        const td4 = document.createElement("td");
+        td4.innerText = item.scientist2;
+        row.appendChild(td4);
+    }
+}
