@@ -1,0 +1,37 @@
+tbody tr td:last-child{
+    background-color: palevioletred;
+}
+ 
+tbody tr td:nth-last-child(3){
+    background-color: palevioletred;
+}
+ 
+tr:has(td[rowspan]):hover td{
+    color: red;
+    font-weight: bold;
+    background-color: blue;
+}
+ 
+tr:has(td[rowspan]):hover+tr td{
+    color: red;
+    font-weight: bold;
+    background-color: blue;
+}
+ 
+tr:has(td[rowspan]):has(+tr:hover) td{
+    color: red;
+    font-weight: bold;
+    background-color: blue;
+}
+ 
+tr:has(td[rowspan])+tr:hover td{
+    color: red;
+    font-weight: bold;
+    background-color: blue;
+}
+ 
+tbody tr:hover td{
+    color: red;
+    font-weight: bold;
+    background-color: blue;
+}
