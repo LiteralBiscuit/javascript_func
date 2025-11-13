@@ -42,51 +42,11 @@ for(const item of thk){
     tr.appendChild(th);
     th.innerText = item;
 }
- 
-const tbody = document.createElement("tbody");
-table.appendChild(tbody)
- 
-for(const obj of arr)
-    {
-    const tr = document.createElement("tr");
-    const td1 = document.createElement("td");
-    const td2 = document.createElement("td");
-    const td3 = document.createElement("td");
+/**
+ * @type {HTMLTableSectionElement}
+ */
+let tbodyjs = createTableBody(table);
 
-    td1.innerText = obj.nemzetiseg;
-    td2.innerText = obj.szerzo1;
-    td3.innerText = obj.mu1;
- 
-    tbody.appendChild(tr);
-    tr.appendChild(td1);
-    tr.appendChild(td2);
-    tr.appendChild(td3);
- 
-    if(obj.szerzo2)
-    {
-        td1.rowSpan = 2;
- 
-        const tr = document.createElement("tr");
-        const td4 = document.createElement("td");
-        const td5 = document.createElement("td");
- 
-        td4.innerText = obj.szerzo2;
-        td5.innerText = obj.mu2;
- 
-         tbody.appendChild(tr);
-         tr.appendChild(td4);
-         tr.appendChild(td5);
-    }
-    td1.addEventListener('click', function
-        /**
-         * @type {HTMLTableCellElement}
-         */
-        Pov(e){
-            const target = e.target;
-            target.classList.add("marked");
-        }
-    )
-}
 
 /**
 * @type {HTMLFormElement}
@@ -148,6 +108,7 @@ form.addEventListener('submit', function (e){
     obj. mu1 = mu1Value;
     obj.szerzo2 = szerzo2Value;
     obj.mu2 = mu2Value;
+    arr.push(obj)
 
     const tbody = document.getElementById("asztal");
     const tr = document.createElement("tr");
@@ -179,5 +140,64 @@ form.addEventListener('submit', function (e){
          tr.appendChild(td4);
          tr.appendChild(td5);
     }
+    tbodyjs.innerHTML = "";
+    tbodyjs = createTableBody(table);
+    console.log(arr);
     }
 )
+
+
+
+/**
+ * 
+ * @param {HTMLTableElement} parentTable 
+ * @returns {HTMLTableSectionElement}
+ */
+function createTableBody(parentTable){
+const tbody = document.createElement("tbody");
+parentTable.appendChild(tbody)
+ 
+for(const obj of arr)
+    {
+    const tr = document.createElement("tr");
+    const td1 = document.createElement("td");
+    const td2 = document.createElement("td");
+    const td3 = document.createElement("td");
+
+    td1.innerText = obj.nemzetiseg;
+    td2.innerText = obj.szerzo1;
+    td3.innerText = obj.mu1;
+ 
+    tbody.appendChild(tr);
+    tr.appendChild(td1);
+    tr.appendChild(td2);
+    tr.appendChild(td3);
+ 
+    if(obj.szerzo2)
+    {
+        td1.rowSpan = 2;
+ 
+        const tr = document.createElement("tr");
+        const td4 = document.createElement("td");
+        const td5 = document.createElement("td");
+ 
+        td4.innerText = obj.szerzo2;
+        td5.innerText = obj.mu2;
+ 
+         tbody.appendChild(tr);
+         tr.appendChild(td4);
+         tr.appendChild(td5);
+    }
+
+    td1.addEventListener('click', function
+        /**
+         * @type {HTMLTableCellElement}
+         */
+        Pov(e){
+            const target = e.target;
+            target.classList.add("marked");
+        }
+    )
+}
+return tbody;
+}
