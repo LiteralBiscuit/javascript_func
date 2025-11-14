@@ -47,3 +47,11 @@ tr:has(td[rowspan]):has(+tr:hover) td{
 tr:has(td[rowspan])+tr:hover td{
     background-color: lightgreen;
 }
+
+.marked{
+    color: blueviolet;
+}
+
+.error{
+    background-color: red;
+}
