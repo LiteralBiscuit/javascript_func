@@ -29,9 +29,11 @@ const arr = [
 ]
 
 /**
- * @type {{id: string, label: string}[]}
+ * @type {mindenIs}
  */
-const formArr = [
+const minden = {
+    thk: ["Nemzetiség", "Szerző", "Mű"],
+    formArr: [
     {
         id : "nemzetiseg",
         label : "Nemzetiség:"
@@ -53,19 +55,16 @@ const formArr = [
         label : "Mű:"
     }
 ]
-/**
- * @type {string[]}
- */
-const thk = ["Nemzetiség", "Szerző", "Mű"];
 
-generateTable(thk, arr);
+}
+generateTable(minden.thk, arr);
 /**
  * @type {HTMLFormElement}
  **/
 const forms = document.getElementById("htmlform");
 forms.addEventListener("submit", HTMLeventListener);
 
-const jsform = createForm(formArr, "form");
+const jsform = createForm(minden.formArr, "jsform");
  
 document.body.appendChild(jsform);
  
@@ -85,16 +84,11 @@ jsform.addEventListener("submit", function (e)
     /**
     * @type {string}
     **/
-    const nemzetisegValue = nemzetiseg.value;
  
     /**
     * @type {HTMLInputElement}
     **/
     const szerzo1 = pepino.querySelector("#szerzo1");
-    /**
-    * @type {string}
-    **/
-   const szerzo1Value = szerzo1.value;
  
     /**
     * @type {HTMLInputElement}
@@ -103,7 +97,6 @@ jsform.addEventListener("submit", function (e)
     /**
     * @type {string}
     **/
-   const mu1Value = mu1.value;
  
     /**
     * @type {HTMLInputElement}
@@ -112,7 +105,6 @@ jsform.addEventListener("submit", function (e)
     /**
     * @type {string}
     **/
-   const szerzo2Value = szerzo2.value;
  
     /**
     * @type {HTMLInputElement}
@@ -121,23 +113,44 @@ jsform.addEventListener("submit", function (e)
     /**
     * @type {string}
     **/
-   const mu2value = mu2.value;
- 
-   /**
-    * @type {CountryWriters}
-    */
-   const obj = {};
-   nemzetisegValue == "" ? obj.nemzetiseg = undefined :  obj.nemzetiseg = nemzetisegValue;
-   szerzo1Value == "" ? obj.szerzo1 = undefined : obj.szerzo1 = szerzo1Value;
-   mu1Value == "" ? obj.mu1 = undefined : obj.mu1 = mu1Value;
-   szerzo2Value == "" ? obj.szerzo2 = undefined : obj.szerzo2 = szerzo2Value;
-   mu2 == "" ? obj.mu2 = undefined : obj.mu2 = mu2value;
 
+   if (validateFields(nemzetiseg, szerzo1, mu1)){  
+        /**
+         * @type {string}
+         */
+        const nemzetisegValue = nemzetiseg.value;
+        
+        /**
+         * @type {string}
+         */
+        const szerzo1Value = szerzo1.value;
 
-   formValidator(nemzetiseg, szerzo1, mu1)
+        /**
+         * @type {string}
+         */
+        const mu1Value = mu1.value;
 
- 
-   arr.push(obj);
-   console.log(arr);
-   renderTableBody(arr);
+        /**
+         * @type {string}
+         */
+        const szerzo2Value = szerzo2.value;
+
+        /**
+         * @type {string}
+         */
+        const mu2Value = mu2.value;
+        /**
+        * @type {CountryWriters}
+        */
+        const obj = {};
+        obj.nemzetiseg = nemzetisegValue;
+        obj.szerzo1 = szerzo1Value;
+        obj.mu1 = mu1Value;
+        obj.szerzo2 = szerzo2Value !== "" ? szerzo2Value : undefined;
+        obj.mu2 = mu2Value !== "" ? mu2Value : undefined;
+        arr.push(obj);
+        console.log(arr);
+        renderTableBody(arr);
+        jsform.reset();
+   }
 })

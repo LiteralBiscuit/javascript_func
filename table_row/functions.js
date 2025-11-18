@@ -1,7 +1,9 @@
 /**
  * @typedef {{nemzetiseg : string, szerzo1 : string, mu1 : string, szerzo2? : string, mu2? : string}} CountryWriters
  * @typedef {{id: string, label: string}} InputForm
+ * @typedef {{thk : string[], formArr: InputForm[]}} mindenIs
  */
+
 /**
  * 
  * @param {HTMLTableSectionElement} tableBody 
@@ -126,9 +128,9 @@ function createForm(arr, formId)
         div.appendChild(label);
         div.appendChild(br1);
         div.appendChild(input);
+        div.appendChild(span);
         div.appendChild(br2);
         div.appendChild(br3);
-        div.appendChild(span)
         span.classList.add("error");
     }
     button.innerText = "Hozzáadás";
@@ -139,19 +141,38 @@ function createForm(arr, formId)
 
 /**
  * 
+ * @param {HTMLInputElement} input
+ * @param {string} message
+ */
+function validateField(input, message){
+    let Isvalid = true
+    if(!input.value){
+        input.parentElement.querySelector(".error").innerText = message;
+        Isvalid = false;
+    }
+    return Isvalid;
+}
+
+/**
+ * 
  * @param {HTMLInputElement} input1 
  * @param {HTMLInputElement} input2 
  * @param {HTMLInputElement} input3 
+ * @returns {bool}
  */
-function formValidator(input1, input2, input3){
-    let valid
-    const inputArr = [input1, input2, input3];
-    for (const element of inputArr) {
-        console.log(element)
-        if(!element.value){
-            element.parentElement.querySelector(".error").innerText = "A mező kitöltése kötelező";
+function validateFields(input1, input2, input3){
+    let Isvalid = true;
+    let lst = document.getElementById("jsform").querySelectorAll(".error");
+    for (const item of lst) {
+        item.innerText = "";
+    }
+    let inputs = [input1, input2, input3];
+    for (const input of inputs) {
+        if(!validateField(input, "A mező kitöltése kötelező!")){
+            Isvalid = false;
         }
     }
+    return Isvalid;
 }
 
 /**
@@ -159,7 +180,7 @@ function formValidator(input1, input2, input3){
  * @param {Event} e
  */
 function HTMLeventListener(e){
-    e.preventDefault();
+        e.preventDefault();
  
     /**
      * @type {HTMLFormElement}
@@ -169,63 +190,78 @@ function HTMLeventListener(e){
     /**
     * @type {HTMLInputElement}
     **/
-    const ubiVagyDinnye = pepino.querySelector("#nemzetiseg");
-
+    const nemzetiseg = pepino.querySelector("#nemzetiseg");
     /**
     * @type {string}
     **/
-    const ubiVagyDinnyeValue = ubiVagyDinnye.value;
  
     /**
     * @type {HTMLInputElement}
     **/
-    const dinnyeVagyUbi = pepino.querySelector("#szerzo1");
-
-    /**
-    * @type {string}
-    **/
-   const dinnyeVagyUbiValue = dinnyeVagyUbi.value;
+    const szerzo1 = pepino.querySelector("#szerzo1");
  
     /**
     * @type {HTMLInputElement}
     **/
-    const zoldVagySarga = pepino.querySelector("#mu1");
-
+    const mu1 = pepino.querySelector("#mu1");
     /**
     * @type {string}
     **/
-   const zoldVagySargaValue = zoldVagySarga.value;
  
     /**
     * @type {HTMLInputElement}
     **/
-    const kerekVagyRud = pepino.querySelector("#szerzo2");
-
+    const szerzo2 = pepino.querySelector("#szerzo2");
     /**
     * @type {string}
     **/
-   const kerekVagyRudValue = kerekVagyRud.value;
  
     /**
     * @type {HTMLInputElement}
     **/
-    const idkatp = pepino.querySelector("#mu2");
-    
+    const mu2 = pepino.querySelector("#mu2");
     /**
     * @type {string}
     **/
-   const idkatpValue = idkatp.value;
- 
-   /**
-    * @type {CountryWriters}
-    */
-   const obj = {};
-   obj.nemzetiseg = ubiVagyDinnyeValue;
-   obj.szerzo1 = dinnyeVagyUbiValue;
-   obj.mu1 = zoldVagySargaValue;
-   obj.szerzo2 = kerekVagyRudValue;
-   obj.mu2 = idkatpValue;
- 
-   const vlm = document.getElementById("asztal");
-   renderTableRow(vlm, obj);
+
+   if (validateFields(nemzetiseg, szerzo1, mu1)){  
+        /**
+         * @type {string}
+         */
+        const nemzetisegValue = nemzetiseg.value;
+        
+        /**
+         * @type {string}
+         */
+        const szerzo1Value = szerzo1.value;
+
+        /**
+         * @type {string}
+         */
+        const mu1Value = mu1.value;
+
+        /**
+         * @type {string}
+         */
+        const szerzo2Value = szerzo2.value;
+
+        /**
+         * @type {string}
+         */
+        const mu2Value = mu2.value;
+        /**
+        * @type {CountryWriters}
+        */
+        const obj = {};
+        obj.nemzetiseg = nemzetisegValue;
+        obj.szerzo1 = szerzo1Value;
+        obj.mu1 = mu1Value;
+        obj.szerzo2 = szerzo2Value !== "" ? szerzo2Value : undefined;
+        obj.mu2 = mu2Value !== "" ? mu2Value : undefined;
+        arr.push(obj);
+        console.log(arr);
+        const vlm = document.getElementById("asztal");
+        renderTableRow(vlm, obj);
+        forms.reset();
+   }
 }
