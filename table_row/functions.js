@@ -1,5 +1,6 @@
 /**
  * @typedef {{nemzetiseg : string, szerzo1 : string, mu1 : string, szerzo2? : string, mu2? : string}} CountryWriters
+ * @typedef {{id: string, label: string}} InputForm
  */
 /**
  * 
@@ -45,11 +46,26 @@ function renderTableRow(tableBody, writerRow){
 function renderTableBody(array)
 {
     const tbodyValtozo = document.getElementById("tbody");
-    tbody.innerHTML = "";
+    tbodyValtozo.innerHTML = "";
  
     for(const obj of array){
         renderTableRow(tbodyValtozo, obj)
     }
+}
+
+/**
+ * 
+ * @param {CountryWriters[]} theadArr 
+ * @param {string[]} tbodyArr 
+ */
+function generateTable(theadArr, tbodyArr){
+    const table = document.createElement("table");
+    document.body.appendChild(table);
+    generateHeader(table, theadArr);
+    const tbody = document.createElement("tbody");
+    table.appendChild(tbody);
+    tbody.id = "tbody";
+    renderTableBody(tbodyArr);
 }
 
 
@@ -83,29 +99,59 @@ function generateHeader(table, headerlist){
 }
 
 /**
- * 
- * @param {HTMLFormElement} form 
- * @param {string} id 
- * @param {string} labelText 
+ * @param {InputForm[]} arr
+ * @param {string} formId
+ * @returns {HTMLFormElement}
  */
-function createFormElement(form, id, labelText)
+function createForm(arr, formId)
 {
-    const label = document.createElement("label");
-    const input = document.createElement("input");
-    const div = document.createElement("div");
-    const span = document.createElement("span");
- 
-    label.htmlFor = id;
-    label.innerText = labelText;
-    input.id = id;
+    const form = document.createElement("form");
+    const button = document.createElement("button");
+    for (const formItem of arr) {
+        const div = document.createElement("div");
+        const span = document.createElement("span");
+        const label = document.createElement("label");
+        const input = document.createElement("input");
+        const br1 = document.createElement("br");
+        const br2 = document.createElement("br");
+        const br3 = document.createElement("br");
 
-    div.appendChild(document.createElement("br"));
-    div.appendChild(label);
-    div.appendChild(document.createElement("br"));
-    div.appendChild(input);
-    div.appendChild(document.createElement("br"));
-    span.classList("error");
-    div.appendChild(span);
+        label.innerText = formItem.label;
+
+        input.type = "text";
+        input.id = formItem.id;
+        input.name = formItem.id;
+
+        form.appendChild(div);
+        div.appendChild(label);
+        div.appendChild(br1);
+        div.appendChild(input);
+        div.appendChild(br2);
+        div.appendChild(br3);
+        div.appendChild(span)
+        span.classList.add("error");
+    }
+    button.innerText = "Hozzáadás";
+    form.id = formId;
+    form.appendChild(button);
+    return form;
+}
+
+/**
+ * 
+ * @param {HTMLInputElement} input1 
+ * @param {HTMLInputElement} input2 
+ * @param {HTMLInputElement} input3 
+ */
+function formValidator(input1, input2, input3){
+    let valid
+    const inputArr = [input1, input2, input3];
+    for (const element of inputArr) {
+        console.log(element)
+        if(!element.value){
+            element.parentElement.querySelector(".error").innerText = "A mező kitöltése kötelező";
+        }
+    }
 }
 
 /**

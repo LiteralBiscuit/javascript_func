@@ -27,35 +27,45 @@ const arr = [
         mu1: 'A fizikusok'
     }
 ]
- 
-const table = document.createElement("table");
-const tbody = document.createElement("tbody");
- 
-document.body.appendChild(table);
-table.appendChild(tbody)
- 
-tbody.id = "tbody";
- 
+
+/**
+ * @type {{id: string, label: string}[]}
+ */
+const formArr = [
+    {
+        id : "nemzetiseg",
+        label : "Nemzetiség:"
+    },
+    {
+        id : "szerzo1",
+        label : "Szerző neve:"
+    },
+    {
+        id : "mu1",
+        label : "Mű:"
+    },
+    {
+        id : "szerzo2",
+        label : "Másik szerző neve:"
+    },
+    {
+        id : "mu2",
+        label : "Mű:"
+    }
+]
+/**
+ * @type {string[]}
+ */
 const thk = ["Nemzetiség", "Szerző", "Mű"];
-generateHeader(table, thk)
-renderTableBody(arr);
- 
+
+generateTable(thk, arr);
 /**
  * @type {HTMLFormElement}
  **/
 const forms = document.getElementById("htmlform");
 forms.addEventListener("submit", HTMLeventListener);
 
-const jsform = document.createElement("form");
-const button = document.createElement("button");
- 
-jsform.id = "form_js";
- 
-createFormElement(jsform, "nemzetiseg", "Nemzetiség:");
-createFormElement(jsform, "szerzo1", "Szerző neve:");
-createFormElement(jsform, "mu1", "Mű:");
-createFormElement(jsform, "szerzo2", "Másik szerző neve:");
-createFormElement(jsform, "mu2", "Mű:");
+const jsform = createForm(formArr, "form");
  
 document.body.appendChild(jsform);
  
@@ -71,60 +81,63 @@ jsform.addEventListener("submit", function (e)
     /**
     * @type {HTMLInputElement}
     **/
-    const ubiVagyDinnye = pepino.querySelector("#nemzetiseg");
+    const nemzetiseg = pepino.querySelector("#nemzetiseg");
     /**
     * @type {string}
     **/
-    const ubiVagyDinnyeValue = ubiVagyDinnye.value;
+    const nemzetisegValue = nemzetiseg.value;
  
     /**
     * @type {HTMLInputElement}
     **/
-    const dinnyeVagyUbi = pepino.querySelector("#szerzo1");
+    const szerzo1 = pepino.querySelector("#szerzo1");
     /**
     * @type {string}
     **/
-   const dinnyeVagyUbiValue = dinnyeVagyUbi.value;
+   const szerzo1Value = szerzo1.value;
  
     /**
     * @type {HTMLInputElement}
     **/
-    const zoldVagySarga = pepino.querySelector("#mu1");
+    const mu1 = pepino.querySelector("#mu1");
     /**
     * @type {string}
     **/
-   const zoldVagySargaValue = zoldVagySarga.value;
+   const mu1Value = mu1.value;
  
     /**
     * @type {HTMLInputElement}
     **/
-    const kerekVagyRud = pepino.querySelector("#szerzo2");
+    const szerzo2 = pepino.querySelector("#szerzo2");
     /**
     * @type {string}
     **/
-   const kerekVagyRudValue = kerekVagyRud.value;
+   const szerzo2Value = szerzo2.value;
  
     /**
     * @type {HTMLInputElement}
     **/
-    const idkatp = pepino.querySelector("#mu2");
+    const mu2 = pepino.querySelector("#mu2");
     /**
     * @type {string}
     **/
-   const idkatpValue = idkatp.value;
+   const mu2value = mu2.value;
  
    /**
     * @type {CountryWriters}
     */
    const obj = {};
-   obj.nemzetiseg = ubiVagyDinnyeValue;
-   obj.szerzo1 = dinnyeVagyUbiValue;
-   obj.mu1 = zoldVagySargaValue;
-   obj.szerzo2 = kerekVagyRudValue;
-   obj.mu2 = idkatpValue;
+   nemzetisegValue == "" ? obj.nemzetiseg = undefined :  obj.nemzetiseg = nemzetisegValue;
+   szerzo1Value == "" ? obj.szerzo1 = undefined : obj.szerzo1 = szerzo1Value;
+   mu1Value == "" ? obj.mu1 = undefined : obj.mu1 = mu1Value;
+   szerzo2Value == "" ? obj.szerzo2 = undefined : obj.szerzo2 = szerzo2Value;
+   mu2 == "" ? obj.mu2 = undefined : obj.mu2 = mu2value;
+
+
+   formValidator(nemzetiseg, szerzo1, mu1)
+
  
    arr.push(obj);
+   console.log(arr);
    renderTableBody(arr);
 })
-button.innerText = "Hozzáadás";
-jsform.append(button);
